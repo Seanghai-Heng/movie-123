@@ -3,7 +3,7 @@
     <div>
       <Logo />
       <h1 class="title">
-        movie-123
+        Movie-123
       </h1>
       <div class="links">
         <a
