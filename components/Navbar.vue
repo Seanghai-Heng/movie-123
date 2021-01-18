@@ -1,16 +1,21 @@
 <template>
   <div>
-<div class="topnav navbar-dark text-white">
+<nav class="topnav navbar-dark navbar navbar-expand-sm text-white">
+   <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navbar-default" id="navbarCollapse">
    <router-link to="/">Home</router-link> 
       <router-link to="/about">About</router-link> 
       <router-link to="#">TV Shows</router-link> 
+      </div>
   <div class="search-container">
     <form autocomplete="off">
       <input type="text" placeholder="Search.." name="search">
       <button type="submit"><i class="fa fa-search"></i></button>
     </form>
   </div>
-</div>
+</nav>
   </div>
 </template>
 
@@ -75,11 +80,33 @@ input:focus {
   background: #ccc;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 680px) {
   .topnav .search-container {
     float: none;
   }
-  .topnav a, .topnav input[type=text], .topnav .search-container button {
+  .navbar-toggler{
+    width: 100%;
+    text-align: left;
+  }
+  .search-container{
+    width:100%;
+  }
+  .topnav .search-container button {
+    width: 10%;
+    text-align: left;
+    display:block;
+    float: none;
+    
+  }
+  .topnav a{
+    padding: 5px;
+    margin-right: 20px;
+    display: block;
+    text-align: left;
+    float : none;
+    padding:14px;
+  }
+   .topnav input[type=text]{
     float: none;
     display: block;
     text-align: left;
@@ -91,30 +118,4 @@ input:focus {
     border: 1px solid #ccc;  
   }
 }
-/*     
-    .navbar-left{
-      width: 70%;
-    }
-    .navbar-right{
-      width:30%;
-    }
-    a{
-        margin-right: 20px;
-    }
-    a:hover{
-      color:white;
-      text-decoration: none;
-    }
-    nav{
-        background-color: black !important;
-        width:100%;
-    }
-    .navbar{
-      width: 100%;
-    }
-    input{
-      border-radius: 100px;
-      
-    } */
-
 </style>
