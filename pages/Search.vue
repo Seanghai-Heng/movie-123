@@ -41,7 +41,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`http://api.tvmaze.com/search/shows?q=${this.tvShow}`)
+      .get(`https://api.tvmaze.com/search/shows?q=${this.tvShow}`)
       .then(response => {
         (this.results = response.data), console.log(response.data);
       });
