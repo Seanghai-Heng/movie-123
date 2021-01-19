@@ -1,6 +1,6 @@
 <template>
   <div>
-<nav class="topnav navbar-dark navbar navbar-expand-sm text-white">
+<nav class="topnav navbar-dark navbar navbar-expand-sm text-white pb-4">
    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,14 +10,16 @@
       <router-link to="#">TV Shows</router-link> 
       </div>
   <div class="search-container">
-    <form autocomplete="off">
-      <input type="text" placeholder="Search.." name="search">
+    <form autocomplete="off" action="/search">
+      <input type="text" placeholder="TV Show" name="tvShow">
       <button type="submit"><i class="fa fa-search"></i></button>
     </form>
   </div>
 </nav>
   </div>
 </template>
+
+
 
 <style>
 * {box-sizing: border-box;}
