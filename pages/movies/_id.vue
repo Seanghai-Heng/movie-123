@@ -43,9 +43,7 @@
             <ul>
               <li>Movie Name : {{ result.name }}</li>
 
-              <li v-if="result.rating">Rating : {{ result.rating.average }}</li>
-
-              <li v-else>Rating : No Rating</li>
+              <li>Rating : {{ result.rating.average??'No Rating' }}</li>
 
               <li v-if="result.schedule && result.schedule.time">
                 Schedule : {{ result.schedule.days[0] }} at
@@ -54,9 +52,7 @@
 
               <li v-else>Schdule : Not available</li>
 
-              <li v-if="result.runtime">Runtime : {{ result.runtime }} mns</li>
-
-              <li v-else>Runtime : Not available</li>
+              <li>Runtime : {{ result.runtime??" Not available" }} mns</li>
 
               <li>Status : {{ result.status }}</li>
             </ul>

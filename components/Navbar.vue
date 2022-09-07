@@ -51,7 +51,9 @@ export default {
 * {
   box-sizing: border-box;
 }
-
+input[type="text"]:focus{
+  outline: none;
+}
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
