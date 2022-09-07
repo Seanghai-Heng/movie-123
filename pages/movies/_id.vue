@@ -30,9 +30,10 @@
       <div v-else>
         <!-- Image Section -->
         <div class="d-flex justify-center pb-3">
-          <div class="column1 col-span-1 mr-4">
+          <div class="column1 col-span-1">
             <div class="overflow-hidden" v-if="result.image">
               <img
+                width="300px" height="300px"
                 class="transform hover:scale-125 duration-500"
                 v-bind:src="result.image.medium"
                 v-bind:alt="result.name"
@@ -43,7 +44,7 @@
         <!-- Movie Details Section -->
         <div class="d-flex justify-center pb-4">
           <div class="column2 col-span-2 leading-10">
-            <div class="details">
+            <div class="details text-lg">
               <ul>
                 <li>Movie Name : {{ result.name }}</li>
 
