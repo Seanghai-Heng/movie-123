@@ -3,7 +3,7 @@
     <div v-if="results[0]" class="container pb-4 text-white">   
       <div v-for="result in results" :key="result.id" class="grid md:grid-cols-3 mb-4">        
             <div class="column1 col-span-1 mr-4">
-               <div v-if="result.show.image"> <img v-bind:src="result.show.image.medium" v-bind:alt="result.show.name">
+               <div class="overflow-hidden" v-if="result.show.image"><router-link :to="`/movies/${result.show.id}`"><img class="transform hover:scale-125 duration-500" v-bind:src="result.show.image.medium" v-bind:alt="result.show.name"></router-link> 
                </div>
          </div>
          <div class="column2 col-span-2 leading-10">
