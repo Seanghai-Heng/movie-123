@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="topnav navbar-dark navbar navbar-expand-sm text-white pb-4">
+    <nav class="topnav navbar-dark navbar navbar-expand-sm text-white">
       <button
         type="button"
         class="navbar-toggler"
