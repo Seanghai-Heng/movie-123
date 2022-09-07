@@ -23,40 +23,67 @@
       </div>
     </div>
 
-    <div v-else class="container pb-4 text-white">
-        <div class="bg-white p-5" v-if="result.length == 0">
+    <div v-else class="pb-4 text-white">
+      <div class="bg-white p-5" v-if="result.length == 0">
         <h1 class="text-black text-center">No Result</h1>
       </div>
-      <div v-else class="grid md:grid-cols-3 mb-4">
-        <div class="column1 col-span-1 mr-4">
-          <div class="overflow-hidden" v-if="result.image">
-            <img
-              class="transform hover:scale-125 duration-500"
-              v-bind:src="result.image.medium"
-              v-bind:alt="result.name"
-            />
+      <div v-else>
+        <!-- Image Section -->
+        <div class="d-flex justify-center pb-3">
+          <div class="column1 col-span-1 mr-4">
+            <div class="overflow-hidden" v-if="result.image">
+              <img
+                class="transform hover:scale-125 duration-500"
+                v-bind:src="result.image.medium"
+                v-bind:alt="result.name"
+              />
+            </div>
           </div>
         </div>
+        <!-- Movie Details Section -->
+        <div class="d-flex justify-center pb-4">
+          <div class="column2 col-span-2 leading-10">
+            <div class="details">
+              <ul>
+                <li>Movie Name : {{ result.name }}</li>
 
-        <div class="column2 col-span-2 leading-10">
-          <div class="details">
-            <ul>
-              <li>Movie Name : {{ result.name }}</li>
+                <li>Rating : {{ result.rating.average ?? "No Rating" }}</li>
 
-              <li>Rating : {{ result.rating.average??'No Rating' }}</li>
+                <li v-if="result.schedule && result.schedule.time">
+                  Schedule : {{ result.schedule.days[0] }} at
+                  {{ result.schedule.time }}
+                </li>
 
-              <li v-if="result.schedule && result.schedule.time">
-                Schedule : {{ result.schedule.days[0] }} at
-                {{ result.schedule.time }}
-              </li>
+                <li v-else>Schdule : Not available</li>
 
-              <li v-else>Schdule : Not available</li>
+                <li>Runtime : {{ result.runtime ?? " Not available" }} mns</li>
 
-              <li>Runtime : {{ result.runtime??" Not available" }} mns</li>
-
-              <li>Status : {{ result.status }}</li>
-            </ul>
+                <li>Status : {{ result.status }}</li>
+              </ul>
+            </div>
           </div>
+        </div>
+        <!-- Casts Section-->
+        <div v-if="casts.length > 0">
+          <h1 class="container pb-4" style="font-size: 50px">The Casts</h1>
+          <div
+            class="container grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2"
+          >
+            <div v-for="cast in casts" class="pb-3">
+              <div class="overflow-hidden h-full d-flex justify-evenly items-center">
+                <img
+                  v-if="cast.character.image != null"
+                  class="w-full transform hover:scale-125 duration-500"
+                  v-bind:src="cast.character.image.medium"
+                />
+                <img v-else v-bind:alt="cast.character.name">
+              </div>
+              <h1 class="text-lg text-center">{{ cast.character.name }}</h1>
+            </div>
+          </div>
+        </div>
+        <div v-else class="container">
+              <h1 style="font-size: 50px;">No Casts To Display</h1>
         </div>
       </div>
     </div>
@@ -73,18 +100,20 @@ export default {
       tvShow: this.$route.query.tvShow,
       result: [],
       loading: true,
+      casts: [],
     };
   },
   methods: {
     async showMovieInfo() {
-      const response = await axios.get(
-        `https://api.tvmaze.com/shows/${this.id}?embed=cast`
-      ).catch(function(error){
-        // console.log(error)
-      })
-      this.loading = false;
+      const response = await axios
+        .get(`https://api.tvmaze.com/shows/${this.id}?embed=cast`)
+        .catch(function (error) {
+          // console.log(error)
+        });
+      console.log(response.data._embedded.cast);
       this.result = response.data;
-     
+      this.casts = response.data._embedded.cast;
+      this.loading = false;
     },
   },
   mounted() {
