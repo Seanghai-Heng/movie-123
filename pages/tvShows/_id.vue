@@ -187,6 +187,12 @@ export default {
             "sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM",
           crossorigin: "anonymous",
         },
+        {
+          src: "https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js",
+        },
+        {
+          src: "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js",
+        }
       ],
     };
   },
