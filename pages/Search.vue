@@ -24,24 +24,27 @@
     </div>
     <div v-else class="container pb-4 text-white">
       <div v-if="results.length == 0">
-        <h1>No Result</h1>
+        <h1 class="text-lg">No Result</h1>
       </div>
+      <span v-else style="font-size: 50px"
+        >Result Search For "{{ tvShow }}"</span
+      >
       <div
         v-for="result in results"
         :key="result.id"
-        class="grid md:grid-cols-3 mb-4"
+        class="grid md:grid-cols-3 mb-4 items-center"
       >
-        <div class="column1 col-span-1 mr-4">
-          <div class="overflow-hidden" v-if="result.show.image">
-            <router-link :to="`/movies/${result.show.id}`"
+        <div class="movie-list p-4">
+          <div class="movie-poster overflow-hidden">
+            <router-link :to="`/tvShows/${result.show.id}`"
               ><img
-                class="transform hover:scale-125 duration-500"
+                class="w-full h-full transform hover:scale-125 duration-500"
                 v-bind:src="result.show.image.medium"
                 v-bind:alt="result.show.name"
             /></router-link>
           </div>
         </div>
-        <div class="column2 col-span-2 leading-10">
+        <div class="column2 col-span-2 leading-10 ml-4">
           <div class="details">
             <ul>
               <li>Movie Name : {{ result.show.name }}</li>
@@ -67,9 +70,9 @@
       </div>
     </div>
     <div class="pb-4"></div>
-    <div class="flex pb-5 mx-auto px-3pt-5 
-            border-t border-gray-500 text-gray-400 text-sm 
-            flex-col md:flex-row max-w-6xl"></div>
+    <div
+      class="flex pb-5 mx-auto px-3pt-5 border-t border-gray-500 text-gray-400 text-sm flex-col md:flex-row max-w-6xl"
+    ></div>
   </div>
 </template>
 
@@ -109,6 +112,15 @@ export default {
 </script>
 
 <style>
+.container {
+  width: 80%;
+}
+.movie-poster {
+  height: 300px;
+}
+.movie-list span {
+  width: 100%;
+}
 .grid > .column1 > img {
   width: 350px;
   height: 250px;

@@ -23,17 +23,22 @@
       </div>
     </div>
 
-    <div v-else class="pb-4 text-white">
+    <div v-else class="container pb-4 text-white">
       <div class="bg-white p-5" v-if="result.length == 0">
         <h1 class="text-black text-center">No Result</h1>
       </div>
       <div v-else>
+        <!-- Summary Section -->
+        <h1 class="pb-4" style="font-size: 50px">The Summary</h1>
+        <p v-html="result.summary" class="pb-4"></p>
+
         <!-- Image Section -->
         <div class="d-flex justify-center pb-3">
           <div class="column1 col-span-1">
             <div class="overflow-hidden" v-if="result.image">
               <img
-                width="300px" height="300px"
+                width="300px"
+                height="300px"
                 class="transform hover:scale-125 duration-500"
                 v-bind:src="result.image.medium"
                 v-bind:alt="result.name"
@@ -67,24 +72,32 @@
         <!-- Casts Section-->
         <div v-if="casts.length > 0">
           <h1 class="container pb-4" style="font-size: 50px">The Casts</h1>
-          <div
-            class="container grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2"
-          >
+          <div class="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
             <div v-for="cast in casts" class="pb-3">
-              <div class="overflow-hidden h-full d-flex justify-evenly items-center">
+              <div class="movie-poster overflow-hidden">
+                <router-link :to="`../casts/${cast.person.id}`">
+                  <img
+                    v-if="cast.character.image != null"
+                    class="w-full h-full transform hover:scale-125 duration-500"
+                    v-bind:src="cast.character.image.medium"
+                /></router-link>
+              </div>
+              <!-- <div class="overflow-hidden d-flex justify-evenly items-center">
+                <router-link :to="`../casts/${cast.person.id}`">
                 <img
                   v-if="cast.character.image != null"
-                  class="w-full transform hover:scale-125 duration-500"
+                  class="w-full h-full transform hover:scale-125 duration-500"
                   v-bind:src="cast.character.image.medium"
                 />
                 <img v-else v-bind:alt="cast.character.name">
-              </div>
+              </router-link>
+              </div> -->
               <h1 class="text-lg text-center">{{ cast.character.name }}</h1>
             </div>
           </div>
         </div>
         <div v-else class="container">
-              <h1 style="font-size: 50px;">No Casts To Display</h1>
+          <h1 style="font-size: 50px">No Casts To Display</h1>
         </div>
       </div>
     </div>
@@ -98,7 +111,6 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      tvShow: this.$route.query.tvShow,
       result: [],
       loading: true,
       casts: [],
