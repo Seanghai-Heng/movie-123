@@ -49,32 +49,42 @@
           Gender : {{ result.gender }}
         </p>
       </div>
+
       <div
-        v-if="castTvShows.length > 0 && castTvRef.length > 0"
+        v-if="castTvShows.length > 0 && castTvRefs.length > 0"
         class="container"
       >
         <!-- related tv show -->
         <h1 class="pb-4" style="font-size: 50px">Also Known For</h1>
         <div class="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
-          <div v-for="(castTvShow, index) in castTvShows" class="pb-3">
+          <div v-for="(castTvShow, index) in castTvShows" >
             <router-link :to="`/tvShows/${castTvShow.id}`">
-              <div
-                class="overflow-hidden d-flex justify-evenly items-center mb-3"
-                style="height: 300px"
-              >
-                <img
-                  width="300px"
-                  v-if="castTvShow.image != null"
-                  class="w-full h-full transform hover:scale-125 duration-500"
-                  v-bind:src="castTvShow.image.medium"
-                />
-                <img v-else v-bind:alt="castTvShow.name" />
+              <div v-if="castTvRefs[index]" class="pb-3">
+                <div
+                  v-if="castTvRefs[index].image"
+                  class="overflow-hidden d-flex justify-evenly items-center mb-3"
+                  style="height: 300px"
+                >
+                  <img
+                    width="300px"
+                    class="w-full h-full transform hover:scale-125 duration-500"
+                    :src="castTvRefs[index].image.medium"
+                  />
+                </div>
+                    <div
+                  v-else
+                  class="overflow-hidden d-flex justify-evenly items-center mb-3"
+                  style="height: 300px"
+                >
+                  <img v-bind:alt="castTvShow.name" />
+                </div>
+                
               </div>
             </router-link>
-            <!-- {{ castTvRef[index]}} -->
+
             <h1 class="text-lg text-center">
-              <span class="fw-bold" v-if="castTvRef[index]">
-                {{ castTvRef[index].name }}
+              <span class="fw-bold" v-if="castTvRefs[index]">
+                {{ castTvRefs[index].name }}
               </span>
               in {{ castTvShow.name }}
             </h1>
@@ -105,9 +115,10 @@ export default {
       link: [
         {
           rel: "stylesheet",
-          href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
-        },
-      ],
+          href:
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        }
+      ]
     };
   },
   name: "TV-Show-Casts",
@@ -118,7 +129,7 @@ export default {
       loading: true,
       castCredits: [],
       castTvShows: [],
-      castTvRef: [],
+      castTvRefs: []
     };
   },
   methods: {
@@ -136,7 +147,6 @@ export default {
         this.showCastCharacterRef(this.castCredits[i]._links.character.href);
       }
       this.loading = false;
-      // console.log(this.castTvRef);
     },
     async showCastMovieInfo(url) {
       const response = await axios.get(url);
@@ -144,13 +154,13 @@ export default {
     },
     async showCastCharacterRef(url) {
       const response = await axios.get(url);
-      this.castTvRef.push(response.data);
-    },
+      this.castTvRefs.push(response.data);
+    }
   },
   async mounted() {
     await this.showCastInfo();
     await this.showCastCreditsInfo();
-  },
+  }
 };
 </script>
 
