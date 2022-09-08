@@ -55,7 +55,10 @@
               <ul>
                 <li>Movie Name : {{ result.name }}</li>
 
-                <li>Rating : {{ result.rating.average ?? "No Rating" }}</li>
+                <li v-if="result.rating.average">
+                  Rating : {{ result.rating.average }}
+                </li>
+                <li v-else>Rating : No Rating</li>
 
                 <li v-if="result.schedule && result.schedule.time">
                   Schedule : {{ result.schedule.days[0] }} at
@@ -64,7 +67,10 @@
 
                 <li v-else>Schdule : Not available</li>
 
-                <li>Runtime : {{ result.runtime ?? " Not available" }} mns</li>
+                <li v-if="result.runtime">
+                  Runtime : {{ result.runtime }} minutes
+                </li>
+                <li v-else>Runtime : Not Available</li>
 
                 <li>Status : {{ result.status }}</li>
               </ul>
@@ -76,7 +82,10 @@
           <h1 class="container pb-4" style="font-size: 50px">The Casts</h1>
           <div class="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
             <div v-for="cast in casts" class="pb-3">
-              <div class="overflow-hidden d-flex justify-evenly items-center" style="height: 300px ;">
+              <div
+                class="overflow-hidden d-flex justify-evenly items-center"
+                style="height: 300px ;"
+              >
                 <router-link :to="`../casts/${cast.person.id}`">
                   <img
                     width="300px"
@@ -165,8 +174,8 @@
                   {{ episode.runtime }} minutes
                 </p>
                 <p>
-                  <span class="fw-bold">Rating: </span>
-                  {{ episode.rating.average ?? "null" }}
+                  <span class="fw-bold" v-if="episode.rating.average">Rating: {{ episode.rating.average }}</span>
+                   <span class="fw-bold" v-else>Rating: "No Rating"</span>
                 </p>
               </div>
             </div>
@@ -188,26 +197,30 @@ export default {
       link: [
         {
           rel: "stylesheet",
-          href: "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css",
+          href:
+            "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css",
           integrity:
             "sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC",
-          crossorigin: "anonymous",
-        },
+          crossorigin: "anonymous"
+        }
       ],
       script: [
         {
-          src: "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js",
+          src:
+            "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js",
           integrity:
             "sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM",
-          crossorigin: "anonymous",
+          crossorigin: "anonymous"
         },
         {
-          src: "https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js",
+          src:
+            "https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"
         },
         {
-          src: "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js",
-        },
-      ],
+          src:
+            "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        }
+      ]
     };
   },
   name: "movie",
@@ -217,7 +230,7 @@ export default {
       result: [],
       loading: true,
       casts: [],
-      episodes: [],
+      episodes: []
     };
   },
   methods: {
@@ -231,11 +244,11 @@ export default {
       this.casts = response.data._embedded.cast;
       this.episodes = response.data._embedded.episodes;
       this.loading = false;
-    },
+    }
   },
   mounted() {
     this.showMovieInfo();
-  },
+  }
 };
 </script>
 
