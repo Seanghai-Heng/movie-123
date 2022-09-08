@@ -157,7 +157,7 @@
 
 <script></script>
 
-<style>
+<style scoped>
 .test {
   height: 300px;
 }

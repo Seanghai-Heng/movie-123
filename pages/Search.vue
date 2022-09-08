@@ -26,8 +26,8 @@
       <div v-if="results.length == 0">
         <h1 class="text-lg">No Result</h1>
       </div>
-      <span v-else style="font-size: 50px"
-        >Result Search For "{{ tvShow }}"</span
+      <h1 v-else style="font-size: 50px" class="text-center mb-2"
+        >Result Search For "{{ tvShow }}"</h1
       >
       <div
         v-for="result in results"
@@ -35,12 +35,14 @@
         class="grid md:grid-cols-3 mb-4 items-center"
       >
         <div class="movie-list p-4">
-          <div class="movie-poster overflow-hidden">
+          <div class="movie-poster overflow-hidden d-flex justify-evenly items-center">
             <router-link :to="`/tvShows/${result.show.id}`"
               ><img
+                v-if="result.show.image != null"
                 class="w-full h-full transform hover:scale-125 duration-500"
                 v-bind:src="result.show.image.medium"
-                v-bind:alt="result.show.name"
+                v-bind:alt="result.show.name" />
+              <img v-else v-bind:alt="result.show.name"
             /></router-link>
           </div>
         </div>
@@ -111,7 +113,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .container {
   width: 80%;
 }
