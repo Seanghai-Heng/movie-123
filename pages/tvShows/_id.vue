@@ -35,8 +35,9 @@
         <!-- Image Section -->
         <div class="d-flex justify-center pb-3">
           <div class="column1 col-span-1">
-            <div class="overflow-hidden" >
-              <img v-if="result.image"
+            <div class="overflow-hidden">
+              <img
+                v-if="result.image"
                 width="300px"
                 height="300px"
                 class="transform hover:scale-125 duration-500"
@@ -74,12 +75,13 @@
         <div v-if="casts.length > 0">
           <h1 class="container pb-4" style="font-size: 50px">The Casts</h1>
           <div class="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
-            <div v-for="cast in casts" class="relative pb-3">
+            <div v-for="cast in casts" class="pb-3">
               <div class="overflow-hidden d-flex justify-evenly items-center">
                 <router-link :to="`../casts/${cast.person.id}`">
                   <img
+                    width="300px"
                     v-if="cast.character.image != null"
-                    class="w-full h-full transform hover:scale-125 duration-500"
+                    class="transform hover:scale-125 duration-500"
                     v-bind:src="cast.character.image.medium"
                   />
                   <img v-else v-bind:alt="cast.character.name" />
@@ -91,6 +93,69 @@
         </div>
         <div v-else class="container">
           <h1 style="font-size: 50px">No Casts To Display</h1>
+        </div>
+
+        <!-- Episodes Section -->
+        <div
+          v-if="episodes.length > 0"
+          id="accordion-collapse"
+          data-accordion="collapse"
+        >
+          <h1 class="container pb-4 mt-3" style="font-size: 50px">
+            The Episodes
+          </h1>
+          <h2 id="accordion-collapse-heading-1">
+            <button
+              type="button"
+              class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+              data-accordion-target="#accordion-collapse-body-1"
+              aria-expanded="true"
+              aria-controls="accordion-collapse-body-1"
+            >
+              <span>What is Flowbite?</span>
+              <svg
+                data-accordion-icon
+                class="w-6 h-6 rotate-180 shrink-0"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </button>
+          </h2>
+          <div
+            id="accordion-collapse-body-1"
+            class="hidden"
+            aria-labelledby="accordion-collapse-heading-1"
+          >
+            <div
+              class="p-5 font-light border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+            >
+              <p class="mb-2 text-gray-500 dark:text-gray-400">
+                Flowbite is an open-source library of interactive components
+                built on top of Tailwind CSS including buttons, dropdowns,
+                modals, navbars, and more.
+              </p>
+              <p class="text-gray-500 dark:text-gray-400">
+                Check out this guide to learn how to
+                <a
+                  href="/docs/getting-started/introduction/"
+                  class="text-blue-600 dark:text-blue-500 hover:underline"
+                  >get started</a
+                >
+                and start developing websites even faster with components on top
+                of Tailwind CSS.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div v-else>
+          <h1 style="font-size: 50px">No Episodes To Display</h1>
         </div>
       </div>
     </div>
@@ -107,18 +172,22 @@ export default {
       result: [],
       loading: true,
       casts: [],
+      episodes: [],
     };
   },
   methods: {
     async showMovieInfo() {
       const response = await axios
-        .get(`https://api.tvmaze.com/shows/${this.id}?embed=cast`)
+        .get(
+          `https://api.tvmaze.com/shows/${this.id}?embed[]=episodes&&embed[]=cast`
+        )
         .catch(function (error) {
           // console.log(error)
         });
-      console.log(response.data._embedded.cast);
+      console.log(response.data._embedded.episodes);
       this.result = response.data;
       this.casts = response.data._embedded.cast;
+      this.episodes = response.data._embedded.episodes;
       this.loading = false;
     },
   },
