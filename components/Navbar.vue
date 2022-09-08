@@ -65,6 +65,7 @@ body {
 }
 
 .topnav a {
+  color: white;
   float: left;
   display: block;
   text-align: center;
