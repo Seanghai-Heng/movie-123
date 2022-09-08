@@ -26,27 +26,30 @@
       <div v-if="results.length == 0">
         <h1 class="text-lg">No Result</h1>
       </div>
-      <h1 v-else style="font-size: 50px" class="text-center mb-2"
-        >Result Search For "{{ tvShow }}"</h1
-      >
+      <h1 v-else style="font-size: 50px" class="text-center mb-2">
+        Result Search For "{{ tvShow }}"
+      </h1>
       <div
         v-for="result in results"
         :key="result.id"
         class="grid md:grid-cols-3 mb-4 items-center"
       >
         <div class="movie-list p-4">
-          <div class="movie-poster overflow-hidden d-flex justify-evenly items-center">
-            <router-link :to="`/tvShows/${result.show.id}`"
-              ><img
+          <router-link :to="`/tvShows/${result.show.id}`">
+            <div
+              class="movie-poster overflow-hidden d-flex justify-evenly items-center"
+            >
+              <img
                 v-if="result.show.image != null"
                 class="w-full h-full transform hover:scale-125 duration-500"
                 v-bind:src="result.show.image.medium"
-                v-bind:alt="result.show.name" />
-              <img v-else v-bind:alt="result.show.name"
-            /></router-link>
-          </div>
+                v-bind:alt="result.show.name"
+              />
+              <img v-else v-bind:alt="result.show.name" />
+            </div>
+          </router-link>
         </div>
-        <div class="column2 col-span-2 leading-10 ml-4">
+        <div class="column2 col-span-2 leading-10 ml-4 text-lg">
           <div class="details">
             <ul>
               <li>Movie Name : {{ result.show.name }}</li>

@@ -76,7 +76,7 @@
           <h1 class="container pb-4" style="font-size: 50px">The Casts</h1>
           <div class="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
             <div v-for="cast in casts" class="pb-3">
-              <div class="overflow-hidden d-flex justify-evenly items-center">
+              <div class="overflow-hidden d-flex justify-evenly items-center" style="height: 300px ;">
                 <router-link :to="`../casts/${cast.person.id}`">
                   <img
                     width="300px"
@@ -95,8 +95,8 @@
           <h1 style="font-size: 50px">No Casts To Display</h1>
         </div>
         <div
-      class="flex pb-5 mx-auto px-3pt-5 border-t border-gray-500 text-gray-400 text-sm flex-col md:flex-row max-w-6xl"
-    ></div>
+          class="flex pb-5 mx-auto px-3pt-5 border-t border-gray-500 text-gray-400 text-sm flex-col md:flex-row max-w-6xl"
+        ></div>
 
         <!-- Episodes Section -->
         <div
@@ -149,11 +149,25 @@
 
               <!-- Details  -->
               <div class="accordion-body text-dark">
-                  <p><span class="fw-bold">Episode's Name: </span> {{ episode.name }} </p>
-                  <p><span class="fw-bold">Episode's Type: </span> {{ episode.type }} </p>
-                  <p><span class="fw-bold">Air Date: </span> {{ episode.airdate }} </p>
-                  <p><span class="fw-bold">Run Time: </span> {{ episode.runtime }} minutes</p>
-                  <p><span class="fw-bold">Rating: </span> {{ episode.rating.average??"null" }} </p>
+                <p>
+                  <span class="fw-bold">Episode's Name: </span>
+                  {{ episode.name }}
+                </p>
+                <p>
+                  <span class="fw-bold">Episode's Type: </span>
+                  {{ episode.type }}
+                </p>
+                <p>
+                  <span class="fw-bold">Air Date: </span> {{ episode.airdate }}
+                </p>
+                <p>
+                  <span class="fw-bold">Run Time: </span>
+                  {{ episode.runtime }} minutes
+                </p>
+                <p>
+                  <span class="fw-bold">Rating: </span>
+                  {{ episode.rating.average ?? "null" }}
+                </p>
               </div>
             </div>
           </div>
@@ -192,7 +206,7 @@ export default {
         },
         {
           src: "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js",
-        }
+        },
       ],
     };
   },
@@ -208,13 +222,10 @@ export default {
   },
   methods: {
     async showMovieInfo() {
-      const response = await axios
-        .get(
-          `https://api.tvmaze.com/shows/${this.id}?embed[]=episodes&&embed[]=cast`
-        )
-        .catch(function (error) {
-          // console.log(error)
-        });
+      const response = await axios.get(
+        `https://api.tvmaze.com/shows/${this.id}?embed[]=episodes&&embed[]=cast`
+      );
+
       console.log(response.data._embedded.episodes);
       this.result = response.data;
       this.casts = response.data._embedded.cast;

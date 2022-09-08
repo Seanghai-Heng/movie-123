@@ -23,28 +23,74 @@
       </div>
     </div>
 
-    <div v-else>
-    <h2
-      style="text-align: center; font-size: 40px; font-weight: bold"
-      class="text-white"
-    >
-      {{ result.name }}
-    </h2>
-
-    <div class="card mb-4">
-      <div class="overflow-hidden">
-        <img
-          v-if="result.image != null"
-          class="w-full h-full transform hover:scale-125 duration-500"
-          v-bind:src="result.image.medium"
-        />
-        <img v-else v-bind:alt="result.name" />
+    <div v-else class="text-white">
+      <h2
+        style="text-align: center; font-size: 40px; font-weight: bold"
+        class="text-white"
+      >
+        {{ result.name }}
+      </h2>
+      <div class="card mb-4">
+        <div class="overflow-hidden">
+          <img
+            v-if="result.image != null"
+            class="w-full h-full transform hover:scale-125 duration-500"
+            v-bind:src="result.image.medium"
+          />
+          <img v-else v-bind:alt="result.name" />
+        </div>
+        <h1 class="mt-2" v-if="result.country">
+          Country : {{ result.country.name }}
+        </h1>
+        <p class="title" v-if="result.birthday">
+          Birthday : {{ result.birthday }}
+        </p>
+        <p style="padding: 10px" v-if="result.gender">
+          Gender : {{ result.gender }}
+        </p>
       </div>
-      <h1 class="mt-2" v-if="result.country">Country : {{ result.country.name }}</h1>
-      <p class="title" v-if="result.birthday">Birthday : {{ result.birthday }}</p>
-      <p style="padding: 10px" v-if="result.gender">Gender : {{ result.gender }}</p>
+      <div
+        v-if="castTvShows.length > 0 && castTvRef.length > 0"
+        class="container"
+      >
+        <!-- related tv show -->
+        <h1 class="pb-4" style="font-size: 50px">Also Known For</h1>
+        <div class="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
+          <div v-for="(castTvShow, index) in castTvShows" class="pb-3">
+            <router-link :to="`/tvShows/${castTvShow.id}`">
+              <div
+                class="overflow-hidden d-flex justify-evenly items-center mb-3"
+                style="height: 300px"
+              >
+                <img
+                  width="300px"
+                  v-if="castTvShow.image != null"
+                  class="w-full h-full transform hover:scale-125 duration-500"
+                  v-bind:src="castTvShow.image.medium"
+                />
+                <img v-else v-bind:alt="castTvShow.name" />
+              </div>
+            </router-link>
+            <!-- {{ castTvRef[index]}} -->
+            <h1 class="text-lg text-center">
+              <span class="fw-bold" v-if="castTvRef[index]">
+                {{ castTvRef[index].name }}
+              </span>
+              in {{ castTvShow.name }}
+            </h1>
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <h1
+          class="container pb-4"
+          style="font-size: 50px"
+          v-if="loading == false"
+        >
+          Doesn't Known For Any Movie
+        </h1>
+      </div>
     </div>
-  </div>
     <div
       class="flex pb-5 mx-auto px-3pt-5 border-t border-gray-500 text-gray-400 text-sm flex-col md:flex-row max-w-6xl"
     ></div>
@@ -70,22 +116,40 @@ export default {
       id: this.$route.params.id,
       result: [],
       loading: true,
+      castCredits: [],
+      castTvShows: [],
+      castTvRef: [],
     };
   },
   methods: {
     async showCastInfo() {
-      const response = await axios
-        .get(`https://api.tvmaze.com/people/${this.id}`)
-        .catch(function (error) {
-          // console.log(error)
-        });
-      console.log(response.data);
+      const response = await axios.get(
+        `https://api.tvmaze.com/people/${this.id}?embed=castcredits`
+      );
+      // console.log(response.data._embedded.castcredits);
       this.result = response.data;
+      this.castCredits = response.data._embedded.castcredits;
+    },
+    async showCastCreditsInfo() {
+      for (var i = 0; i < this.castCredits.length; i++) {
+        this.showCastMovieInfo(this.castCredits[i]._links.show.href);
+        this.showCastCharacterRef(this.castCredits[i]._links.character.href);
+      }
       this.loading = false;
+      // console.log(this.castTvRef);
+    },
+    async showCastMovieInfo(url) {
+      const response = await axios.get(url);
+      this.castTvShows.push(response.data);
+    },
+    async showCastCharacterRef(url) {
+      const response = await axios.get(url);
+      this.castTvRef.push(response.data);
     },
   },
-  mounted() {
-    this.showCastInfo();
+  async mounted() {
+    await this.showCastInfo();
+    await this.showCastCreditsInfo();
   },
 };
 </script>
