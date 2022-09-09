@@ -3,42 +3,14 @@
     <!-- loading component -->
     <Loading v-if="loading" />
 
-    <div v-else class="container pb-4 text-white">
-      <div class="bg-white p-5" v-if="result.length == 0">
-        <h1 class="text-black text-center">No Result</h1>
-      </div>
-      <div v-else>
-        <!-- Summary Section -->
-        <Summary :result="result" />
-
-        <!-- Image Section -->
-        <TvShowImage :result="result" />
-
-        <!-- Movie Details Section -->
-        <TvShowDetails :result="result" />
-
-        <!-- Casts Section-->
-        <Casts :casts="casts" />
-
-        <!-- Horizontal Line -->
-        <Horizontal_Line />
-
-        <!-- Episodes Section -->
-        <Episodes :episodes="episodes" />
-      </div>
-    </div>
+    <TvShowResult v-else :result="result" :casts="casts" :episodes="episodes" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import Loading from "../../components/Loading.vue";
-import Horizontal_Line from "../../components/Horizontal_Line.vue";
-import Summary from "../../components/TvShows/Summary.vue";
-import TvShowImage from "../../components/TvShows/Image.vue";
-import TvShowDetails from "../../components/TvShows/Details.vue";
-import Casts from "../../components/TvShows/Casts.vue";
-import Episodes from "../../components/TvShows/Episodes.vue";
+import TvShowResult from "../../components/TvShows/Result.vue";
 
 export default {
   head() {
@@ -80,15 +52,21 @@ export default {
   },
   methods: {
     async showMovieInfo() {
-      const response = await axios.get(
-        `https://api.tvmaze.com/shows/${this.id}?embed[]=episodes&&embed[]=cast`
-      );
-
-      console.log(response.data._embedded.episodes);
-      this.result = response.data;
-      this.casts = response.data._embedded.cast;
-      this.episodes = response.data._embedded.episodes;
-      this.loading = false;
+      await axios
+        .get(
+          `https://api.tvmaze.com/shows/${this.id}?embed[]=episodes&&embed[]=cast`
+        )
+        .then(
+          (response) => {
+            this.result = response.data;
+            this.casts = response.data._embedded.cast;
+            this.episodes = response.data._embedded.episodes;
+            this.loading = false;
+          },
+          (error) => {
+            this.loading = false;
+          }
+        );
     },
   },
   mounted() {
@@ -96,12 +74,7 @@ export default {
   },
   components: {
     Loading,
-    Summary,
-    TvShowImage,
-    TvShowDetails,
-    Casts,
-    Episodes,
-    Horizontal_Line,
+    TvShowResult,
   },
 };
 </script>

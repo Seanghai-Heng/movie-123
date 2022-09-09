@@ -33,7 +33,7 @@ export default {
       const response = await axios.get(
         `https://api.tvmaze.com/search/shows?q=${this.tvShow}`
       );
-      // console.log(response.data)
+      console.log(response.data)
       this.results = response.data;
       this.loading = false;
     },
