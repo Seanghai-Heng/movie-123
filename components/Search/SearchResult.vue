@@ -10,6 +10,8 @@
       <SearchImage :result="result" />
       <SearchDetails :result="result" />
     </div>
+    <!-- Horizontal Line -->
+    <Horizontal_Line />
   </div>
 </template>
 
@@ -17,12 +19,14 @@
 import SearchImage from "../Search/SearchImage.vue";
 import SearchDetails from "./SearchDetails.vue";
 import CheckIfExist from "./CheckIfExists.vue";
+import Horizontal_Line from "../Horizontal_Line.vue";
 export default {
   props: {
     searchResults: Array,
     searchText: String,
   },
   components: {
+    Horizontal_Line,
     SearchImage,
     SearchDetails,
     CheckIfExist,

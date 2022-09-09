@@ -5,9 +5,6 @@
     <SearchResult v-else :searchResults="results" :searchText="tvShow" />
 
     <div class="pb-4"></div>
-
-    <!-- Horizontal Line -->
-    <Horizontal_Line />
   </div>
 </template>
 
@@ -33,7 +30,7 @@ export default {
       const response = await axios.get(
         `https://api.tvmaze.com/search/shows?q=${this.tvShow}`
       );
-      console.log(response.data)
+      console.log(response.data);
       this.results = response.data;
       this.loading = false;
     },
