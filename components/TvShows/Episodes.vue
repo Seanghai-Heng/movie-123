@@ -28,43 +28,13 @@
         >
           <!-- Accordion Body -->
           <!-- Image -->
-          <div class="accordion-body text-dark">
-            <div class="overflow-hidden d-flex justify-evenly items-center">
-              <img
-                width="300px"
-                v-if="episode.image != null"
-                class="transform hover:scale-125 duration-500"
-                v-bind:src="episode.image.medium"
-              />
-              <img v-else v-bind:alt="episode.url" />
-            </div>
-          </div>
+          <TvShowImage :episode="episode" />
 
           <!-- Summary -->
-          <div class="accordion-body text-dark" v-html="episode.summary"></div>
+          <EpisodeSummary :episode="episode" />
 
           <!-- Details  -->
-          <div class="accordion-body text-dark">
-            <p>
-              <span class="fw-bold">Episode's Name: </span>
-              {{ episode.name }}
-            </p>
-            <p>
-              <span class="fw-bold">Episode's Type: </span>
-              {{ episode.type }}
-            </p>
-            <p><span class="fw-bold">Air Date: </span> {{ episode.airdate }}</p>
-            <p>
-              <span class="fw-bold">Run Time: </span>
-              {{ episode.runtime }} minutes
-            </p>
-            <p>
-              <span class="fw-bold" v-if="episode.rating.average"
-                >Rating: {{ episode.rating.average }}</span
-              >
-              <span class="fw-bold" v-else>Rating: "No Rating"</span>
-            </p>
-          </div>
+          <EpisodeDetails :episode="episode" />
         </div>
       </div>
     </div>
@@ -75,9 +45,17 @@
 </template>
 
 <script>
+import TvShowImage from "./Episodes/Image.vue";
+import EpisodeSummary from "./Episodes/Summary.vue";
+import EpisodeDetails from "./Episodes/Details.vue";
 export default {
   props: {
     episodes: Array,
+  },
+  components: {
+    TvShowImage,
+    EpisodeSummary,
+    EpisodeDetails
   },
 };
 </script>
