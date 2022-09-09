@@ -143,8 +143,8 @@ export default {
     },
     async showCastCreditsInfo() {
       for (var i = 0; i < this.castCredits.length; i++) {
-        this.showCastMovieInfo(this.castCredits[i]._links.show.href);
-        this.showCastCharacterRef(this.castCredits[i]._links.character.href);
+        await this.showCastMovieInfo(this.castCredits[i]._links.show.href);
+        await this.showCastCharacterRef(this.castCredits[i]._links.character.href);
       }
       this.loading = false;
     },
