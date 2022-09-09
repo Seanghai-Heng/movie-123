@@ -2,7 +2,8 @@
   <div class="bg-black pt-4">
     <Loading v-if="loading" />
 
-    <CastResult v-else
+    <CastResult
+      v-else
       :result="result"
       :castTvShows="castTvShows"
       :castTvRefs="castTvRefs"
@@ -38,12 +39,18 @@ export default {
   },
   methods: {
     async showCastInfo() {
-      const response = await axios.get(
-        `https://api.tvmaze.com/people/${this.id}?embed=castcredits`
-      );
-      // console.log(response.data._embedded.castcredits);
-      this.result = response.data;
-      this.castCredits = response.data._embedded.castcredits;
+      await axios
+        .get(`https://api.tvmaze.com/people/${this.id}?embed=castcredits`)
+        .then(
+          (response) => {
+            this.result = response.data;
+            this.castCredits = response.data._embedded.castcredits;
+            this.loading = false;
+          },
+          (error) => {
+            this.loading = false;
+          }
+        );
     },
     async showCastCreditsInfo() {
       for (var i = 0; i < this.castCredits.length; i++) {
