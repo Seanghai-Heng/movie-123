@@ -8,6 +8,9 @@
       :castTvShows="castTvShows"
       :castTvRefs="castTvRefs"
     />
+
+    <!-- Horizontal Line -->
+    <Horizontal_Line v-if="loading === false" />
   </div>
 </template>
 
@@ -15,6 +18,7 @@
 import axios from "axios";
 import Loading from "../../components/Loading.vue";
 import CastResult from "../../components/Casts/Result.vue";
+import Horizontal_Line from "../../components/Horizontal_Line.vue";
 export default {
   head() {
     return {
@@ -77,6 +81,7 @@ export default {
   components: {
     Loading,
     CastResult,
+    Horizontal_Line,
   },
 };
 </script>

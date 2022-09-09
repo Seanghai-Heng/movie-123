@@ -1,7 +1,11 @@
 <template>
   <div class="text-white">
     <!-- Cast Info -->
-    <CastInfo :result="result" />
+    <CastInfo v-if="Object.keys(result).length > 0" :result="result" />
+
+    <div v-else class="text-white text-center" style="font-size: 50px">
+      No Result
+    </div>
 
     <div
       v-if="castTvShows.length > 0 && castTvRefs.length > 0"
@@ -19,13 +23,10 @@
         Doesn't Known For Any Movie
       </h1>
     </div>
-    <!-- Horizontal Line -->
-    <Horizontal_Line />
   </div>
 </template>
 
 <script>
-import Horizontal_Line from "../../components/Horizontal_Line.vue";
 import CastResult from "../../components/Casts/Result.vue";
 import CastInfo from "../../components/Casts/CastInfo.vue";
 import RelatedShows from "../../components/Casts/RelatedShows.vue";
@@ -37,7 +38,6 @@ export default {
     castTvRefs: Array,
   },
   components: {
-    Horizontal_Line,
     CastInfo,
     RelatedShows,
     CastResult,
