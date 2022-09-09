@@ -1,5 +1,11 @@
 <template>
-  <div class="container">
+  <div class="container pb-4 text-white">
+    <div v-if="searchResults.length == 0">
+      <h1 class="text-lg">No Result</h1>
+    </div>
+    <h1 v-else style="font-size: 50px" class="text-center mb-2">
+      Result Search For "{{ searchText }}"
+    </h1>
     <div
       v-for="result in searchResults"
       :key="result.id"
@@ -8,6 +14,7 @@
       <div class="movie-list p-4">
         <router-link :to="`/tvShows/${result.show.id}`">
           <div
+            style="height: 300px"
             class="movie-poster overflow-hidden d-flex justify-evenly items-center"
           >
             <img
@@ -51,9 +58,7 @@
 export default {
   props: {
     searchResults: Array,
+    searchText: String,
   },
-  created(){
-    console.log(this.searchResults)
-  }
 };
 </script>

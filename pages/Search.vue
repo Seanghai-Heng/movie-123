@@ -1,17 +1,12 @@
 <template>
   <div class="bg-black">
-    <!-- loading component -->
+
     <Loading v-if="loading" />
-    <div v-else class="container pb-4 text-white">
-      <div v-if="results.length == 0">
-        <h1 class="text-lg">No Result</h1>
-      </div>
-      <h1 v-else style="font-size: 50px" class="text-center mb-2">
-        Result Search For "{{ tvShow }}"
-      </h1>
-      <SearchResult :searchResults="results" />
-    </div>
+
+    <SearchResult v-else :searchResults="results" :searchText="tvShow" />
+
     <div class="pb-4"></div>
+
     <div
       class="flex pb-5 mx-auto px-3pt-5 border-t border-gray-500 text-gray-400 text-sm flex-col md:flex-row max-w-6xl"
     ></div>
