@@ -30,12 +30,12 @@
 
       <div
         v-if="castTvShows.length > 0 && castTvRefs.length > 0"
-        class="container"
+        class="container pb-4"
       >
         <!-- related tv show -->
         <h1 class="pb-4" style="font-size: 50px">Also Known For</h1>
         <div class="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
-          <div v-for="(castTvShow, index) in castTvShows" >
+          <div v-for="(castTvShow, index) in castTvShows">
             <router-link :to="`/tvShows/${castTvShow.id}`">
               <div v-if="castTvRefs[index]" class="pb-3">
                 <div
@@ -49,14 +49,13 @@
                     :src="castTvRefs[index].image.medium"
                   />
                 </div>
-                    <div
+                <div
                   v-else
                   class="overflow-hidden d-flex justify-evenly items-center mb-3"
                   style="height: 300px"
                 >
                   <img v-bind:alt="castTvShow.name" />
                 </div>
-                
               </div>
             </router-link>
 
@@ -78,26 +77,25 @@
           Doesn't Known For Any Movie
         </h1>
       </div>
+      <!-- Horizontal Line -->
+      <Horizontal_Line />
     </div>
-    <div
-      class="flex pb-5 mx-auto px-3pt-5 border-t border-gray-500 text-gray-400 text-sm flex-col md:flex-row max-w-6xl"
-    ></div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import Loading from "../../components/Loading.vue"
+import Loading from "../../components/Loading.vue";
+import Horizontal_Line from "../../components/Horizontal_Line.vue";
 export default {
   head() {
     return {
       link: [
         {
           rel: "stylesheet",
-          href:
-            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        }
-      ]
+          href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
+        },
+      ],
     };
   },
   name: "TV-Show-Casts",
@@ -108,7 +106,7 @@ export default {
       loading: true,
       castCredits: [],
       castTvShows: [],
-      castTvRefs: []
+      castTvRefs: [],
     };
   },
   methods: {
@@ -123,7 +121,9 @@ export default {
     async showCastCreditsInfo() {
       for (var i = 0; i < this.castCredits.length; i++) {
         await this.showCastMovieInfo(this.castCredits[i]._links.show.href);
-        await this.showCastCharacterRef(this.castCredits[i]._links.character.href);
+        await this.showCastCharacterRef(
+          this.castCredits[i]._links.character.href
+        );
       }
       this.loading = false;
     },
@@ -134,15 +134,16 @@ export default {
     async showCastCharacterRef(url) {
       const response = await axios.get(url);
       this.castTvRefs.push(response.data);
-    }
+    },
   },
   async mounted() {
     await this.showCastInfo();
     await this.showCastCreditsInfo();
   },
-  components:{
-      Loading
-  }
+  components: {
+    Loading,
+    Horizontal_Line,
+  },
 };
 </script>
 

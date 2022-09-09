@@ -1,21 +1,20 @@
 <template>
   <div class="bg-black">
-
     <Loading v-if="loading" />
 
     <SearchResult v-else :searchResults="results" :searchText="tvShow" />
 
     <div class="pb-4"></div>
 
-    <div
-      class="flex pb-5 mx-auto px-3pt-5 border-t border-gray-500 text-gray-400 text-sm flex-col md:flex-row max-w-6xl"
-    ></div>
+    <!-- Horizontal Line -->
+    <Horizontal_Line />
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import Loading from "../components/Loading.vue";
+import Horizontal_Line from "../components/Horizontal_Line.vue";
 import SearchResult from "../components/Search/SearchResult.vue";
 export default {
   name: "Search",
@@ -50,6 +49,7 @@ export default {
   components: {
     Loading,
     SearchResult,
+    Horizontal_Line,
   },
 };
 </script>
