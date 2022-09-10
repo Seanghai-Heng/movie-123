@@ -6,14 +6,20 @@
         <div v-for="result in results" :key="result.id" class="movie-list p-4">
           <router-link :to="`/tvShows/${result.id}`">
             <div class="test relative">
-              <div class="movie-poster overflow-hidden" v-if="result.image">
+              <div class="movie-poster overflow-hidden d-flex justify-evenly items-center" v-if="result.image">
                 <img
+                  v-if="result.image.medium"
                   class="w-full h-full  transform hover:scale-125 duration-500"
-                  :src="result.image.medium"
-                  :alt="result.name"
+                  v-bind:src="result.image.medium"
+                  v-bind:alt="result.name"
                 />
-                <span class="absolute text-center">{{ result.name }}</span>
               </div>
+              <div v-else class="movie-poster overflow-hidden d-flex justify-evenly items-center">
+                <img
+                  v-bind:alt="result.name"
+                />
+              </div>
+               <span class="absolute text-center">{{ result.name }}</span>
             </div>
           </router-link>
         </div>
@@ -34,7 +40,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      page: 0,
+      page: this.$route.query.page??0,
       results: [],
       loading: true
     };
@@ -55,6 +61,7 @@ export default {
   },
   mounted() {
     this.tvShowInfo();
+    console.log(this.page)
   }
 };
 </script>
