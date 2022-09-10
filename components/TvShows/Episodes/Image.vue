@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="accordion-body text-dark">
-      <div class="overflow-hidden d-flex justify-evenly items-center">
+      <div class="overflow-hidden d-flex justify-evenly items-center" v-if="episode.image">
+        <a :href="episode.image.medium" target="_blank">
         <img
           width="300px"
           v-if="episode.image != null"
@@ -9,6 +10,7 @@
           v-bind:src="episode.image.medium"
         />
         <img v-else v-bind:alt="episode.url" />
+        </a>
       </div>
     </div>
   </div>
