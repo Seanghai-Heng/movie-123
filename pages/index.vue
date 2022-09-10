@@ -6,7 +6,10 @@
         <div v-for="result in results" :key="result.id" class="movie-list p-4">
           <router-link :to="`/tvShows/${result.id}`">
             <div class="test relative">
-              <div class="movie-poster overflow-hidden d-flex justify-evenly items-center" v-if="result.image">
+              <div
+                class="movie-poster overflow-hidden d-flex justify-evenly items-center"
+                v-if="result.image"
+              >
                 <img
                   v-if="result.image.medium"
                   class="w-full h-full  transform hover:scale-125 duration-500"
@@ -14,17 +17,36 @@
                   v-bind:alt="result.name"
                 />
               </div>
-              <div v-else class="movie-poster overflow-hidden d-flex justify-evenly items-center">
-                <img
-                  v-bind:alt="result.name"
-                />
+              <div
+                v-else
+                class="movie-poster overflow-hidden d-flex justify-evenly items-center"
+              >
+                <img v-bind:alt="result.name" />
               </div>
-               <span class="absolute text-center">{{ result.name }}</span>
+              <span class="absolute text-center">{{ result.name }}</span>
             </div>
           </router-link>
         </div>
         <!-- End tv show lists -->
       </div>
+
+      <!-- Pager -->
+
+      <div class="container mt-5">
+        <ul class="pagination d-flex justify-center">
+          <li class="page-item" @click="pageChange">
+            <router-link class="page-link" :to="`?page=${currentPage - 1}`"
+              >Previous</router-link
+            >
+          </li>
+          <li class="page-item" @click="pageChange">
+            <router-link class="page-link" :to="`?page=${currentPage + 1}`"
+              >Next</router-link
+            >
+          </li>
+        </ul>
+      </div>
+      <!-- End pager -->
     </div>
     <div class="pb-4"></div>
     <div
@@ -38,37 +60,53 @@
 <script>
 import axios from "axios";
 export default {
+   created() {
+    this.$nuxt.$on('home', ($event) => this.home($event))
+  },
   data() {
     return {
-      page: this.$route.query.page??0,
+      currentPage: parseInt(this.$route.query.page ?? 0),
       results: [],
       loading: true
     };
   },
   methods: {
+    pageChange() {
+      this.currentPage = parseInt(this.$route.query.page);
+      this.results = [];
+      this.tvShowInfo();
+    },
     async tvShowInfo() {
-      await axios.get(`https://api.tvmaze.com/shows?page=${this.page}`).then(
-        response => {
-          this.results = response.data;
-          this.loading = false;
-          console.log(this.results);
-        },
-        error => {
-          this.loading = false;
-        }
-      );
+      await axios
+        .get(`https://api.tvmaze.com/shows?page=${this.currentPage}`)
+        .then(
+          response => {
+            this.results = response.data;
+            this.loading = false;
+            // console.log(this.results);
+          },
+          error => {
+            this.loading = false;
+          }
+        );
+    },
+    home(val) {
+      console.log("hi");
+      this.loading = true;
+      this.currentPage = 0;
+      this.tvShowInfo();
     }
   },
   mounted() {
     this.tvShowInfo();
-    console.log(this.page)
   }
 };
 </script>
 
 <style scoped>
-a:hover{
+a:hover {
   color: white;
+  background: black;
 }
 .test {
   height: 300px;

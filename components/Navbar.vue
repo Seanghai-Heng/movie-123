@@ -10,7 +10,14 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse navbar-default" id="navbarCollapse">
-        <router-link to="/">Home</router-link>
+        <router-link to="/">
+          <button
+            @click="$nuxt.$emit('home', 'home')"
+          >
+            Home
+          </button></router-link
+        >
+
         <router-link to="/about">About</router-link>
         <router-link to="#">TV Shows</router-link>
       </div>
@@ -36,14 +43,14 @@ export default {
   name: "movie",
   data() {
     return {
-      tvShow: null,
+      tvShow: null
     };
   },
   methods: {
     submit() {
       this.$router.push("/search?tvShow=" + this.tvShow);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -51,7 +58,7 @@ export default {
 * {
   box-sizing: border-box;
 }
-input[type="text"]:focus{
+input[type="text"]:focus {
   outline: none;
 }
 body {
@@ -74,7 +81,7 @@ body {
   font-size: 17px;
 }
 
-.topnav a:hover {
+.topnav a:hover, .topnav button:hover {
   background-color: #ddd;
   color: black;
 }

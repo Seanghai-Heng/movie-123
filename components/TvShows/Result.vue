@@ -52,7 +52,7 @@ export default {
     Horizontal_Line,
   },
   created() {
-    console.log(this.result.length);
+    // console.log(this.result.length);
   },
 };
 </script>
