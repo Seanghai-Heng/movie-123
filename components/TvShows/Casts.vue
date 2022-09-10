@@ -3,7 +3,7 @@
         <div v-if="casts.length > 0">
           <h1 class="container pb-4" style="font-size: 50px">The Casts</h1>
           <div class="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
-            <div v-for="cast in casts" class="pb-3">
+            <div v-for="cast in casts" class="pb-3" :key="cast.person.id">
               <div
                 class="overflow-hidden d-flex justify-evenly items-center"
                 style="height: 300px"

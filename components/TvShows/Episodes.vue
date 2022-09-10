@@ -6,7 +6,7 @@
       id="accordionFlushExample"
     >
       <h1 class="container pb-4 mt-3" style="font-size: 50px">The Episodes</h1>
-      <div v-for="episode in episodes" class="accordion-item">
+      <div v-for="episode in episodes" class="accordion-item" :key="episode.id">
         <h2 class="accordion-header" :id="`flush-heading${episode.id}`">
           <button
             style="font-weight: bold"

@@ -3,7 +3,7 @@
     <div class="movie-list p-4">
       <router-link :to="`/tvShows/${result.show.id}`">
         <div
-          style="height: 300px"
+          style="height: 300px; width:90%"
           class="movie-poster overflow-hidden d-flex justify-evenly items-center"
         >
           <img

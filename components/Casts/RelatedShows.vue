@@ -2,7 +2,7 @@
   <div>
     <h1 class="pb-4" style="font-size: 50px">Also Known For</h1>
     <div class="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
-      <div v-for="(castTvShow, index) in castTvShows">
+      <div v-for="(castTvShow, index) in castTvShows" :key="castTvShow.id">
         <router-link :to="`/tvShows/${castTvShow.id}`">
           <div v-if="castTvRefs[index]" class="pb-3">
             <div
