@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-black">
+  <div class="bg-black pt-3">
     <Loading v-if="loading" />
 
     <SearchResult v-else :searchResults="results" :searchText="tvShow" />

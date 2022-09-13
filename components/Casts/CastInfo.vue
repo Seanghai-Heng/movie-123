@@ -2,7 +2,7 @@
   <div>
     <h2
       style="text-align: center; font-size: 40px; font-weight: bold"
-      class="text-white"
+      class="text-white mb-2"
     >
       {{ result.name }}
     </h2>

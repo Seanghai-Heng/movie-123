@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-black">
+  <div class="bg-black pt-3">
     <!-- loading component -->
     <Loading v-if="loading" />
 
