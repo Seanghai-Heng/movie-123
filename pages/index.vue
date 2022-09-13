@@ -36,7 +36,9 @@
       <div class="container mt-5 mb-5">
         <ul class="pagination d-flex justify-center">
           <li class="page-item" @click="pageChange">
-            <router-link class="page-link" :to="`?page=${currentPage - 1}`"
+            <router-link
+              :class="currentPage == 0 ? 'page-link btn disabled' : 'page-link'" 
+              :to="`?page=${currentPage - 1}`"
               >Previous</router-link
             >
           </li>
