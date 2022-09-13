@@ -38,7 +38,7 @@
           <li class="page-item" @click="pageChange">
             <router-link
               :class="currentPage == 0 ? 'page-link btn disabled' : 'page-link'" 
-              :to="`?page=${currentPage - 1}`"
+              :to="currentPage == 0 ? `?page=0`: `?page=${currentPage - 1}` "
               >Previous</router-link
             >
           </li>
@@ -76,7 +76,7 @@ export default {
   methods: {
     pageChange() {
       this.loading = true;
-      this.currentPage = parseInt(this.$route.query.page);
+      this.currentPage = parseInt(this.$route.query.page ?? 0),
       this.results = [];
       this.tvShowInfo();
     },
