@@ -1,6 +1,7 @@
 <template>
   <div class="bg-black font-mono">
-    <div class="container text-white">
+    <Loading v-if="loading" />
+    <div v-else class="container text-white">
       <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
         <!-- Tv show lists -->
         <div v-for="result in results" :key="result.id" class="movie-list p-4">
@@ -12,7 +13,7 @@
               >
                 <img
                   v-if="result.image.medium"
-                  class="w-full h-full  transform hover:scale-125 duration-500"
+                  class="w-full h-full transform hover:scale-125 duration-500"
                   v-bind:src="result.image.medium"
                   v-bind:alt="result.name"
                 />
@@ -32,7 +33,7 @@
 
       <!-- Pager -->
 
-      <div class="container mt-5">
+      <div class="container mt-5 mb-5">
         <ul class="pagination d-flex justify-center">
           <li class="page-item" @click="pageChange">
             <router-link class="page-link" :to="`?page=${currentPage - 1}`"
@@ -47,31 +48,32 @@
         </ul>
       </div>
       <!-- End pager -->
+      <div
+        class="flex pb-5 mx-auto px-3pt-5 border-t border-gray-500 text-gray-400 text-sm flex-col md:flex-row max-w-6xl"
+      ></div>
     </div>
+
     <div class="pb-4"></div>
-    <div
-      class="flex pb-5 mx-auto px-3pt-5 
-            border-t border-gray-500 text-gray-400 text-sm 
-            flex-col md:flex-row max-w-6xl"
-    ></div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Loading from "../components/Loading.vue";
 export default {
-   created() {
-    this.$nuxt.$on('home', ($event) => this.home($event))
+  created() {
+    this.$nuxt.$on("home", ($event) => this.home($event));
   },
   data() {
     return {
       currentPage: parseInt(this.$route.query.page ?? 0),
       results: [],
-      loading: true
+      loading: true,
     };
   },
   methods: {
     pageChange() {
+      this.loading = true;
       this.currentPage = parseInt(this.$route.query.page);
       this.results = [];
       this.tvShowInfo();
@@ -80,12 +82,12 @@ export default {
       await axios
         .get(`https://api.tvmaze.com/shows?page=${this.currentPage}`)
         .then(
-          response => {
+          (response) => {
             this.results = response.data;
             this.loading = false;
             // console.log(this.results);
           },
-          error => {
+          (error) => {
             this.loading = false;
           }
         );
@@ -95,11 +97,14 @@ export default {
       this.loading = true;
       this.currentPage = 0;
       this.tvShowInfo();
-    }
+    },
   },
   mounted() {
     this.tvShowInfo();
-  }
+  },
+  components: {
+    Loading,
+  },
 };
 </script>
 
