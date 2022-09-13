@@ -95,7 +95,6 @@ export default {
         );
     },
     home(val) {
-      console.log("hi");
       this.loading = true;
       this.currentPage = 0;
       this.tvShowInfo();
