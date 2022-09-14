@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <!-- Container wrapper -->
       <div class="container">
         <!-- Navbar brand -->
@@ -124,5 +124,6 @@ input[type="text"]:focus {
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  padding: 63px 0 0 0;
 }
 </style>
