@@ -14,10 +14,10 @@
       {{ episode.runtime }} minutes
     </p>
     <p>
-      <span class="fw-bold" v-if="episode.rating.average"
-        >Rating: {{ episode.rating.average }}</span
-      >
-      <span class="fw-bold" v-else>Rating: "No Rating"</span>
+      <span class="fw-bold"
+        >Rating: </span>
+      <span v-if="episode.rating.average">{{ episode.rating.average }} </span>
+      <span v-else>No Rating</span>
     </p>
   </div>
 </template>
