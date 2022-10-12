@@ -25,6 +25,12 @@ export default {
       loading: true,
     };
   },
+  watch: {
+    // Note: only simple paths. Expressions are not supported.
+    '$route.query.tvShow'(newValue) {
+      this.searchMovies(newValue);
+    }
+  },
   methods: {
     async moviesList() {
       const response = await axios.get(
