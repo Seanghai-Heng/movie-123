@@ -5,7 +5,7 @@
     </div>
     <div v-else>
       <h1 style="font-size: 50px" class="text-center mb-2">
-        Result Search For "{{ searchText }}"
+        Result Search For "{{ searchText == '' ? '' : searchText }}"
       </h1>
     </div>
   </div>
