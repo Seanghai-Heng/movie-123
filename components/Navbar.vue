@@ -69,11 +69,6 @@
                 <i class="fa fa-bookmark pe-2 mr-2"></i> About
               </router-link>
             </li>
-            <li class="nav-item" style="width: 75px">
-              <a class="nav-link d-flex align-items-center" href="#!"
-                >Sign In</a
-              >
-            </li>
           </ul>
         </div>
         <!-- Collapsible wrapper -->
