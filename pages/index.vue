@@ -87,7 +87,6 @@ export default {
           (response) => {
             this.results = response.data;
             this.loading = false;
-            // console.log(this.results);
           },
           (error) => {
             this.loading = false;
