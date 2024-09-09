@@ -58,18 +58,6 @@
               </button>
             </div>
           </form>
-
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <router-link
-                to="/about"
-                class="nav-link d-flex align-items-center"
-                style="outline: none"
-              >
-                <i class="fa fa-bookmark pe-2 mr-2"></i> About
-              </router-link>
-            </li>
-          </ul>
         </div>
         <!-- Collapsible wrapper -->
       </div>
